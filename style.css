@@ -1,3 +1,13 @@
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1;
+}
+
 img {
     width: 100%;
     height: 100%;
@@ -7,9 +17,77 @@ ul, li {
     list-style: none;
 }
 
+h1 {
+    font-size: 1.5rem;
+    color: #374649;
+    font-weight: 700;
+    line-height: 1.33;
+}
+
+button {
+    border: none;
+    margin: 0;
+    padding: 0;
+    width: auto;
+    overflow: visible;
+
+    background: transparent;
+
+    /* inherit font & color from ancestor */
+    color: inherit;
+    font: inherit;
+
+    /* Normalize `line-height`. Cannot be changed from `normal` in Firefox 4+. */
+    line-height: normal;
+
+    /* Corrects font smoothing for webkit */
+    -webkit-font-smoothing: inherit;
+    -moz-osx-font-smoothing: inherit;
+
+    /* Corrects inability to style clickable `input` types in iOS */
+    -webkit-appearance: none;
+
+    /* MR code */
+    display: inline-block;
+    width: auto;
+    height: auto;
+    box-sizing: border-box;
+    border-radius: 24px;
+    text-align: center;
+    border: 1px solid transparent;
+    font-size: 1.125rem;
+    padding: 9px 47px;
+    transition: all 250ms ease;
+    background-color: #1e7b92;
+    color: #fff;
+    cursor: pointer;
+}
+
 .main-header {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    padding: 8px 16px;
+    background: #1e7b92;
+    color: white;
+}
+
+.content {
+    height: 70vh;
+    padding: 32px 16px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 32px;
+}
+
+.content.slider {
+    background-color: rgba(0, 0, 0, 0.603);
+}
+
+.btn-back {
+    background-color: #fff;
+    color: #1e7b92;
+    border-color: #1e7b92;
 }
 
 .icon-noti {
@@ -22,12 +100,16 @@ ul, li {
     text-align: center;
 }
 
+
 .gallery {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0px, 1fr));
+    grid-template-columns: repeat(2, minmax(0px, auto));
+    justify-content: center;
     column-gap: 32px;
+    row-gap: 32px;
 
-    li {
+    a {
+        display: block;
         aspect-ratio: 1;
 
         img {
@@ -36,67 +118,83 @@ ul, li {
     }
 }
 
-/* View Transition Stuff*/
-.main-header {
-    view-transition-name: main-header;
-    contain: layout;
-}
+.gallery.slider {
+    max-width: 100%;
 
-.main-header-text {
-    view-transition-name: main-header-text;
-    contain: layout;
-    width: fit-content;
-}
+    display: grid;
 
-.banner-img img {
-    view-transition-name: banner-img;
-    contain: layout;
-}
+    justify-content: center;
 
-.gallery img {
-    contain: layout;
-}
+    align-items: center;
 
-@keyframes fade-in {
-    from {
-        opacity: 0;
+    flex-wrap: nowrap;
+
+    column-gap: 64px;
+
+    grid-template-columns: 200px 70% 200px;
+
+    height: 90%;
+
+    overflow-x: hidden;
+
+    li {
+        aspect-ratio: 1;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    
     }
+
 }
 
-@keyframes fade-out {
-    to {
-        opacity: 0;
-    }
+.cat--first {
+    order: 1;
 }
 
-@keyframes slide-from-right {
-    from {
-        transform: translateX(30px);
-    }
+.cat--last {
+    order: 3;
 }
 
-@keyframes slide-to-left {
-    to {
-        transform: translateX(-30px);
-    }
+/* Transition Stuff */
+
+#openCatMona {
+    view-transition-name: active-cat;
 }
 
-::view-transition-old(root) {
-    animation: 90ms cubic-bezier(0.4, 0, 1, 1) both fade-out,
-        300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-to-left;
+#openCatTomy {
+    view-transition-name: active-cat-tomy;
 }
 
-::view-transition-new(root) {
-    animation: 210ms cubic-bezier(0, 0, 0.2, 1) 90ms both fade-in,
-        300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-from-right;
+::view-transition-old(active-cat),
+::view-transition-new(active-cat),
+::view-transition-old(active-cat-tomy),
+::view-transition-new(active-cat-tomy) {
+  /* Prevent the default animation,
+  so both views remain opacity:1 throughout the transition */
+  animation: none;
+  /* Use normal blending,
+  so the new view sits on top and obscures the old view */
+  mix-blend-mode: normal;
+  /* Make the height the same as the group,
+  meaning the view size might not match its aspect-ratio. */
+  height: 100%;
+  /* Clip any overflow of the view */
+  overflow: clip;
 }
 
-::view-transition-old(banner-img),
-::view-transition-new(banner-img) {
-    animation: none;
-    mix-blend-mode: normal;
+/* The old view is the thumbnail */
+::view-transition-old(active-cat),
+::view-transition-old(active-cat-tomy) {
+  /* Maintain the aspect ratio of the view,
+  by shrinking it to fit within the bounds of the element */
+  object-fit: contain;
 }
 
-::view-transition-image-pair(banner-img) {
-    isolation: none;
+/* The new view is the full image */
+::view-transition-new(active-cat),
+::view-transition-new(active-cat-tomy) {
+  /* Maintain the aspect ratio of the view,
+  by growing it to cover the bounds of the element */
+  object-fit: cover;
 }

@@ -5,6 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+
+    <link rel="stylesheet" href="reset.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -20,22 +25,35 @@
     <main class="content">
         <h1 class="content-title">Pick a Design to start with</h1>
         <ul class="gallery">
-            <li>
-                <a href="/cats/mona.html">
+            <li class="cat cat--cleopatra">
+                <a id="openCatCleopatra" href="#">
+                    <img src="https://plus.unsplash.com/premium_photo-1677545183884-421157b2da02?q=80&w=2672&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        alt="A cat with a flower as a neckless" />
+                    <span class="gallery-item-title">Cleopatra</span>
+                </a>
+            </li>
+            <li class="cat cat--mona">
+                <a id="openCatMona" href="#">
                     <img src="https://cdn.glitch.global/b2a0e9e8-12a2-4158-b2d8-11ef08ab8d68/kimi-thumb.jpg?v=1658763216756"
                         alt="A black cat hiding under a chimnea" />
                     <span class="gallery-item-title">Mona</span>
                 </a>
             </li>
-            <li>
-                <a href="/cats/tomy.html">
+            <li class="cat cat--tomy">
+                <a id="openCatTomy" href="#">
                     <img src="https://cdn.glitch.global/b2a0e9e8-12a2-4158-b2d8-11ef08ab8d68/senna-thumb.jpg?v=1658763217087"
                         alt="A black cat standing next to another black cat, who's lying on the floor" />
                     <span class="gallery-item-title">Tomy</span>
                 </a>
             </li>
         </ul>
+
+
     </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <script src="swiper-init.js"></script>
 
     <script src="index.js"></script>
 </body>
